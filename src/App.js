@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './App.css';
-import { updateSelection } from './action-add-model';
+import { addModel } from './action-add-model';
 // import ModelDetails from './ModelDetails';
+import './App.css';
 
 const data = {
   "Ivel Z3": {
@@ -27,34 +27,34 @@ const data = {
   }
 }
 
-
 class App extends Component {
 
-  handleChange = (event) => {
-
+  updateSelection = (event) => {
+  const name = event.target.value
+  const selectedModel = data[name]
     this.setState({
-      [event.target.name]: event.target.value
-    });
+      // [event.target.name]: event.target.value
+      model: {
+        name: name,
+        manufacturer: selectedModel.manufacturer,
+        year: selectedModel.year,
+        origin: selectedModel.origin
+      }
+    })
   }
 
-  addModel = (event) => {
+  handleSubmit = (event) => {
     event.preventDefault()
-
-    this.props.updateSelection({
-      name: event.target.value,
-      manufacturer: this.state.manufacturer,
-      year: this.state.year,
-      origin: this.state.origin
-    })
+    this.props.addModel(this.state.model)
   }
 
   render() {
     return (
       <div className="App">
 
-        <form onSubmit={this.addModel}>
+        <form onSubmit={this.handleSubmit}>
           <label>
-            <select onChange={this.handleChange}>
+            <select onChange={this.updateSelection}>
               <option value="">-- pick a model --</option>
               <option value="Ivel Z3">Ivel Z3 (1969)</option>
               <option value="Bally Astrocade">Bally Astrocade (1977)</option>
@@ -64,8 +64,8 @@ class App extends Component {
           </label>
           <input type="submit" value="Add"/>
         </form>
-        {/* { this.props.model.map(model =>
-          <ModelDetails />) } */}
+        {/* {this.props.models.map(model =>
+          <ModelDetails addModel={this.addModel}/> )} */}
       </div>
     );
   }
@@ -77,4 +77,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {updateSelection} )(App)
+export default connect(mapStateToProps, { addModel })(App)

@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 
-export default class ModelDetails extends PureComponent {
+export default class ModelDetails extends Component {
   render() {
-    return 
+    return
       <div>
         <ul>
           <li>Name: {this.props.name}</li>

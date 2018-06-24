@@ -1,13 +1,8 @@
 export const ADD_MODEL = 'ADD_MODEL'
 
-export const updateSelection = (model) => {
+export function addModel(model) {
   return {
     type:'ADD_MODEL',
-    payload: {
-      name: model.name,
-      manufacturer: model.manufacturer,
-      year: model.year,
-      origin: model.origin
-    }
+    payload: model
   }
 }
